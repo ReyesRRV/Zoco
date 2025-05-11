@@ -53,6 +53,9 @@ const Dashboard = () => {
             </div>
           </>
         )}
+        <div className="w-full md:w-1/2">
+          <UserProfileForm userData={userData} onUpdate={handleUpdate} />
+        </div>
       </main>
     </div>
   );
