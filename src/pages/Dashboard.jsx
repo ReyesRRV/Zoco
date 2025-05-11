@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../components/sideBar';
 import UserProfileForm from '../components/userForm';
+import { useNavigate } from 'react-router-dom'
+
 
 const Dashboard = () => {
   const [userCount, setUserCount] = useState(0);
-  const [userData, setUserData] = useState({
-    name: 'Juan Pérez',
-    email: 'user@zoco.com',
-    address: 'Av. Siempre Viva 123',
-    phone: '123456789',
-    studies: 'Ingeniería Informática',
-    experience: '3 años en desarrollo web',
-  });
-
-  // Simulamos el rol del usuario (puedes cambiarlo a 'user' para un usuario común)
+  const [userData, setUserData] = useState({});
   const [userRole, setUserRole] = useState('admin'); // 'admin' o 'user'
+
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    // Simulamos la carga de datos del usuario
+    const simulatedUserData = JSON.parse(localStorage.getItem('user'))
+      ? JSON.parse(localStorage.getItem('user'))
+      : navigate('/dashboard')
+
+    setUserData(simulatedUserData);
+  }, []);
 
   useEffect(() => {
     // Simulamos cantidad de usuarios
@@ -32,7 +37,7 @@ const Dashboard = () => {
       <Sidebar />
 
       <main className="flex-1 p-8 space-y-6">
-        {userRole === 'admin' && (
+        {userData.role === 'admin' && (
           <>
             <h1 className="text-2xl font-bold">Panel de Administración</h1>
             <div className="max-w-4xl mx-auto">
